@@ -25,7 +25,7 @@ class TestParseConfrontantes(unittest.TestCase):
         self.assertEqual(parsed["oeste"], "Fazenda Boa Vista")
 
     def test_parse_with_nascente_poente(self):
-        text = "NORTE: Area A SUL: Area B NASCENTE: Rua C POENTE: Sítio D"
+        text = "NORTE: Área A SUL: Área B NASCENTE: Rua C POENTE: Sítio D"
         parsed = parse_confrontantes(text)
 
         self.assertEqual(parsed["leste"], "Rua C")
