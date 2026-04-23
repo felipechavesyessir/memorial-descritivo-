@@ -2,9 +2,10 @@
 from __future__ import annotations
 
 import argparse
+from collections import deque
 import re
 from pathlib import Path
-from typing import Dict, Iterable, List
+from typing import Deque, Dict, Iterable, List
 
 from docx import Document
 from docx.document import Document as DocumentType
@@ -115,12 +116,12 @@ def replace_first_placeholder_in_paragraph(paragraph: Paragraph, value: str) -> 
 
 def fill_docx_placeholders(template_path: Path, output_path: Path, replacements: List[str]) -> int:
     doc = Document(str(template_path))
-    queue = list(replacements)
+    queue: Deque[str] = deque(replacements)
     replaced = 0
 
     for paragraph in iter_document_paragraphs(doc):
         while queue and replace_first_placeholder_in_paragraph(paragraph, queue[0]):
-            queue.pop(0)
+            queue.popleft()
             replaced += 1
 
     doc.save(str(output_path))
